@@ -91,6 +91,8 @@ void Row::writeToRow(int startFrom, string str){
     }
 }
 
+
+
 void Row::removeChar(int index){
     if(index<0 || index>=LEN){
         std::__throw_invalid_argument("The inedex you entered is now withing the bounds of a row.");
@@ -98,6 +100,27 @@ void Row::removeChar(int index){
     this->Letters[index]='~';
     this->Filled[index]=false;;
 }
+
+void Row::removeFromRow(int startFrom, int length){
+    int endAt=startFrom+length;
+    int i;
+    if(startFrom<0 || startFrom>=LEN || endAt<0 || endAt>=LEN){
+        std::__throw_invalid_argument("The inedex you entered is now withing the bounds of a row.");
+    }
+    for(i=startFrom;i<endAt;i++){
+        removeChar(i);
+    }
+}
+
+// int main(){
+//     Row r;
+//     r.printRow();
+//     Row r2=Row("hello world", 45);
+//     r2.removeChar(44);
+//     r2.printRow();
+//     r2.writeToRow(50, "adon shoko");
+
+// }
 
 
 

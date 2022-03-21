@@ -4,6 +4,7 @@
 #include <cctype>
 #include <iterator>
 #include <vector>
+using namespace ariel;
 
 Page::Page(){
     this->rowCounter=0;
@@ -40,7 +41,7 @@ void Page::writeToRow(int rowIndex, int startFrom, string str, ariel::Direction 
         std::__throw_invalid_argument("The row or column you entered does not exist.");
         exit(1);
     }
-    if(dir==ariel::Direction::Vertical){
+    if(dir==ariel::Direction::Horizontal){
         rows.at(rowIndex)->writeToRow(startFrom, str);
         return;
     }       
@@ -60,6 +61,29 @@ void Page::writeToRow(int rowIndex, int startFrom, string str, ariel::Direction 
             c=str.at(j);
             rows.at(i)->writeToRow(startFrom, c);
             j++;
+        }
+    }
+}
+
+void Page::removeFromPage(int rowIndex, int startFrom, int length, ariel::Direction dir){
+    int rowEndIndex;
+    int i;
+    string c;
+    if(rowIndex<0||rowIndex>=rowCounter||startFrom<0||startFrom>=LEN){
+        std::__throw_invalid_argument("The row or column you entered does not exist.");
+        exit(1);
+    }
+    if(dir==ariel::Direction::Horizontal){
+        rows.at(rowIndex)->removeFromRow(startFrom, length);
+        return;
+    }       
+    else{
+        rowEndIndex=rowEndIndex+length;
+        if(!isRowExist(rowEndIndex-1)){
+            std::__throw_invalid_argument("one or more rows does not exist.");
+        }
+        for(i=rowIndex;i<rowEndIndex;i++){
+            rows.at(i)->removeFromRow(startFrom, 1);
         }
     }
 }
